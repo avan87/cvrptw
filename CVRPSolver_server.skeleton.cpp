@@ -2,13 +2,13 @@
 // You should copy it to another filename to avoid overwriting it.
 
 #include "CVRPSolver.h"
-#include "matr.h"
-#include "main.h"
 #include "utils.h"
 #include <thrift/protocol/TBinaryProtocol.h>
 #include <thrift/server/TNonblockingServer.h>
 #include <thrift/transport/TServerSocket.h>
 #include <thrift/transport/TBufferTransports.h>
+#include "matr.h"
+#include "main.h"
 
 using namespace ::apache::thrift;
 using namespace ::apache::thrift::protocol;
@@ -23,7 +23,7 @@ class CVRPSolverHandler : virtual public CVRPSolverIf {
     // Your initialization goes here
   }
 
-  void solveCVRP(std::vector<std::vector<int64_t> > & _return, const std::vector<std::vector<int64_t> > & vec, const std::vector<int64_t> & demands, const std::vector<int64_t> & v_caps) {
+    void solveCVRP(std::vector<std::vector<int64_t> > & _return, const std::vector<std::vector<int64_t> > & vec, const std::vector<int64_t> & demands, const std::vector<int64_t> & v_caps) {
 
       Utils utils;
 
@@ -38,21 +38,21 @@ class CVRPSolverHandler : virtual public CVRPSolverIf {
 
       for(int i=0; i< cvrp_result.size(); i++) {
 
-          _return.push_back(std::vector<int64_t>(0,0));
-          for (int j = 0; j < cvrp_result[i].size(); j++){
+        _return.push_back(std::vector<int64_t>(0,0));
+        for (int j = 0; j < cvrp_result[i].size(); j++){
 
-              _return[i].push_back((int64_t) cvrp_result[i][j]);
-          }
+          _return[i].push_back((int64_t) cvrp_result[i][j]);
+        }
       }
 
 
 
 
-    printf("solveCVRP\n");
-  }
+      printf("solveCVRP\n");
+    }
 
-  void solveCVRPTW(std::vector<std::vector<int64_t> > & _return, const std::vector<std::vector<int64_t> > & vec, const std::vector<int64_t> & demands, const std::vector<int64_t> & v_caps, const std::vector<std::vector<int64_t> > & timeWindows, const std::vector<int64_t> & serviceTime) {
-    // Your implementation goes here
+    void solveCVRPTW(std::vector<std::vector<int64_t> > & _return, const std::vector<std::vector<int64_t> > & vec, const std::vector<int64_t> & demands, const std::vector<int64_t> & v_caps, const std::vector<std::vector<int64_t> > & timeWindows, const std::vector<int64_t> & serviceTime) {
+      // Your implementation goes here
 
 
       Utils utils;
@@ -70,30 +70,33 @@ class CVRPSolverHandler : virtual public CVRPSolverIf {
 
       for(int i=0; i< cvrp_result.size(); i++) {
 
-          _return.push_back(std::vector<int64_t>(0,0));
-          for (int j = 0; j < cvrp_result[i].size(); j++){
+        _return.push_back(std::vector<int64_t>(0,0));
+        for (int j = 0; j < cvrp_result[i].size(); j++){
 
-              _return[i].push_back((int64_t) cvrp_result[i][j]);
-          }
+          _return[i].push_back((int64_t) cvrp_result[i][j]);
+        }
       }
 
 
 
-    printf("solveCVRPTW\n");
-  }
+      printf("solveCVRPTW\n");
+    }
 
 };
 
 int main(int argc, char **argv) {
-  int port = 9090;
+	int port = 9090;
   shared_ptr<CVRPSolverHandler> handler(new CVRPSolverHandler());
   shared_ptr<TProcessor> processor(new CVRPSolverProcessor(handler));
   shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
   shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
   shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
-
-
-
+  
+  // shared_ptr<PosixThreadFactory> threadFactory = shared_ptr<PosixThreadFactory>(new PosixThreadFactory());
+  // shared_ptr<ThreadManager> threadManager = ThreadManager::newSimpleThreadManager(20);
+  // threadManager->threadFactory(threadFactory);
+  // threadManager->start();
+  
   TNonblockingServer server(processor, protocolFactory, port);
   server.serve();
   return 0;

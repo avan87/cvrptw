@@ -3,7 +3,7 @@ project(cvrptw)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-set(SOURCE_FILES main.cpp  matr.cpp utils.cpp utils.h cvrp_types.cpp cvrp_constants.cpp cvrp_solver_server.cpp CVRPSolver.cpp)
+set(SOURCE_FILES main.cpp  matr.cpp utils.cpp utils.h cvrp_constants.cpp cvrp_types.cpp CVRPSolver.cpp CVRPSolver_server.skeleton.cpp )
 
 
 

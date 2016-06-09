@@ -5,8 +5,8 @@
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cvrp_types.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/main.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/CVRPSolver_server.skeleton.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/utils.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cvrp_solver_server.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/utils.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CVRPSolver.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cvrp_constants.cpp" isTestSource="false" />

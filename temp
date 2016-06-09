@@ -1,0 +1,58 @@
+ void solveCVRP(std::vector<std::vector<int64_t> > & _return, const std::vector<std::vector<int64_t> > & vec, const std::vector<int64_t> & demands, const std::vector<int64_t> & v_caps) {
+
+      Utils utils;
+
+      std::vector<std::vector<int64>> tempVec = utils.cast2dList(vec);
+      std::vector<int64> dem = utils.castList(demands);
+      std::vector<int64> veh_caps = utils.castList(v_caps);
+
+      operations_research::Matrix matrix(tempVec, dem, veh_caps);
+      operations_research::CVRPTWSolver vrpSolver;
+
+      std::vector<std::vector<int64>> cvrp_result = vrpSolver.SolveCVRP(matrix, veh_caps.size());
+
+      for(int i=0; i< cvrp_result.size(); i++) {
+
+          _return.push_back(std::vector<int64_t>(0,0));
+          for (int j = 0; j < cvrp_result[i].size(); j++){
+
+              _return[i].push_back((int64_t) cvrp_result[i][j]);
+          }
+      }
+
+
+
+
+    printf("solveCVRP\n");
+  }
+
+  void solveCVRPTW(std::vector<std::vector<int64_t> > & _return, const std::vector<std::vector<int64_t> > & vec, const std::vector<int64_t> & demands, const std::vector<int64_t> & v_caps, const std::vector<std::vector<int64_t> > & timeWindows, const std::vector<int64_t> & serviceTime) {
+    // Your implementation goes here
+
+
+      Utils utils;
+
+      std::vector<std::vector<int64>> tempVec = utils.cast2dList(vec);
+      std::vector<int64> dem = utils.castList(demands);
+      std::vector<int64> veh_caps = utils.castList(v_caps);
+      std::vector<std::pair<int64, int64>> timeW = utils.castToListOfPairs(timeWindows);
+      std::vector<int64> servTime = utils.castList(serviceTime);
+
+      operations_research::Matrix matrix(tempVec, dem, veh_caps, timeW, servTime);
+      operations_research::CVRPTWSolver vrpSolver;
+
+      std::vector<std::vector<int64>> cvrp_result = vrpSolver.SolveCVRPTW(matrix, veh_caps.size());
+
+      for(int i=0; i< cvrp_result.size(); i++) {
+
+          _return.push_back(std::vector<int64_t>(0,0));
+          for (int j = 0; j < cvrp_result[i].size(); j++){
+
+              _return[i].push_back((int64_t) cvrp_result[i][j]);
+          }
+      }
+
+
+
+    printf("solveCVRPTW\n");
+  }
