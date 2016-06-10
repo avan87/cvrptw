@@ -4,9 +4,11 @@
 #include "CVRPSolver.h"
 #include "utils.h"
 #include <thrift/protocol/TBinaryProtocol.h>
-#include <thrift/server/TNonblockingServer.h>
+
+#include <thrift/server/TSimpleServer.h>
 #include <thrift/transport/TServerSocket.h>
 #include <thrift/transport/TBufferTransports.h>
+
 #include "matr.h"
 #include "main.h"
 
@@ -85,20 +87,16 @@ class CVRPSolverHandler : virtual public CVRPSolverIf {
 };
 
 int main(int argc, char **argv) {
-	int port = 9090;
-  shared_ptr<CVRPSolverHandler> handler(new CVRPSolverHandler());
-  shared_ptr<TProcessor> processor(new CVRPSolverProcessor(handler));
-  shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
-  shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
-  shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
-  
-  // shared_ptr<PosixThreadFactory> threadFactory = shared_ptr<PosixThreadFactory>(new PosixThreadFactory());
-  // shared_ptr<ThreadManager> threadManager = ThreadManager::newSimpleThreadManager(20);
-  // threadManager->threadFactory(threadFactory);
-  // threadManager->start();
-  
-  TNonblockingServer server(processor, protocolFactory, port);
-  server.serve();
-  return 0;
+    int port = 9090;
+    shared_ptr<CVRPSolverHandler> handler(new CVRPSolverHandler());
+    shared_ptr<TProcessor> processor(new CVRPSolverProcessor(handler));
+    shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
+    shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
+    shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
+
+    TSimpleServer server(processor, serverTransport, transportFactory, protocolFactory);
+    std::cout << "listening..." << std::endl;
+    server.serve();
+    return 0;
 }
 
